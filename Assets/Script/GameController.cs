@@ -128,30 +128,30 @@ public class GameController : MonoSingleton<GameController>
 
         int maxIterations = 100;
 
-    for (int i = 0; i < maxIterations; i++)
-    {
-        int randomIndex = UnityEngine.Random.Range(0, triangulation.indices.Length - 2); 
-        int index1 = triangulation.indices[randomIndex];
-        int index2 = triangulation.indices[randomIndex + 1];
-        int index3 = triangulation.indices[randomIndex + 2];
-
-        Vector3 v1 = triangulation.vertices[index1];
-        Vector3 v2 = triangulation.vertices[index2];
-        Vector3 v3 = triangulation.vertices[index3];
-
-        randomPoint = (v1 + v2 + v3) / 3f; 
-
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPoint, out hit, 1f, NavMesh.AllAreas)) 
+        for (int i = 0; i < maxIterations; i++)
         {
-            randomPoint = hit.position;
-            break;
+            int randomIndex = UnityEngine.Random.Range(0, triangulation.indices.Length - 2); 
+            int index1 = triangulation.indices[randomIndex];
+            int index2 = triangulation.indices[randomIndex + 1];
+            int index3 = triangulation.indices[randomIndex + 2];
+
+            Vector3 v1 = triangulation.vertices[index1];
+            Vector3 v2 = triangulation.vertices[index2];
+            Vector3 v3 = triangulation.vertices[index3];
+
+            randomPoint = (v1 + v2 + v3) / 3f; 
+
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(randomPoint, out hit, 1f, NavMesh.AllAreas)) 
+            {
+                randomPoint = hit.position;
+                break;
+            }
         }
+        return randomPoint;
     }
-            return randomPoint;
-        }
 
-
+    [SerializeField] private GameObject win;
         public void EndGame(bool isWin) 
         {
             sourisList.Clear();
